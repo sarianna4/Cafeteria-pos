@@ -30,10 +30,14 @@ jobs:
 
       - name: Revisar archivos
         run: |
-          find . -maxdepth 3 -type f | sort | head -200
+          find . -maxdepth 4 -type f | sort | head -200
+          echo "Verificando configuracion de Gradle"
+          test -f settings.gradle
+          test -f build.gradle
+          test -f app/build.gradle
 
       - name: Compilar APK
-        run: gradle assembleDebug
+        run: gradle assembleDebug --refresh-dependencies --stacktrace --info
 
       - name: Guardar APK
         uses: actions/upload-artifact@v4
